@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+input[type="text"]{
+    background: white;
+    border: none;
+    alignItems: right;
+}
+.button{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(60px, auto);
+}
+.col-4{
+    box-shadow: 0 0 10px lightblue;
+}
+input{
+    height: 100px;
+}
+button{
+    font-weight: bold;
+    margin: 5px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background: grey;
+}
+input:focus,
+button:hover{
+    outline: none;
+}
+.warna1{
+    background: lightblue;
+    color: black;
+}
+.warna2{
+    background: yellow;
+    color: black;
+}
+#clean{
+    grid-column: 1/3
+}
+#jumlah{
+    grid-column: 3/5;
+}

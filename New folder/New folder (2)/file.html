@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUACA API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+    
+
+    <script type="text/babel">
+        
+        const {useState, useEffect} = React;
+
+
+        const API_URL = "d2a034023030e0bb179868d32b00b0e4";
+        const makeIconURL = (iconId) => `https://openweathermap.org/img/wn/${iconId}@2x.png`
+
+        const getWeatherData = async (city, units = "metric") =>{
+            const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_URL}&units=${units}`;
+            const data = await fetch(URL)
+                .then((res)=>res.json())
+                .then((data)=>data);
+
+            const {
+                weather, 
+                main: {temp,feels_like, temp_min, temp_max,pressure,humidity},
+                wind: {speed},
+                sys: {country},
+                name,
+            } = data;
+
+            const {description, icon} = weather[0];
+
+            return {
+                description,
+                iconURL : makeIconURL(icon),
+                temp,
+                feels_like,
+                temp_min,
+                temp_max,
+                pressure,
+                humidity,
+                speed,
+                country,
+                name,
+            };
+        }
+
+        const Description=({weather, units})=>{
+
+            const tempUnit = units === "metric" ? "C" : "F";
+            const windUnit = units === "metric" ? "m/s" : "m/h";
+
+            const cards = [
+                {
+                    id: 1,
+                    title: "min",
+                    data: weather.temp_min.toFixed(),
+                    unit: tempUnit,
+                },
+                {
+                    id: 2,
+                    title: "max",
+                    data: weather.temp_max.toFixed(),
+                    unit: tempUnit,
+                },
+                {
+                    id: 3,
+                    title: "feels_like",
+                    data: weather.feels_like.toFixed(),
+                    unit: tempUnit,
+                },
+                {
+                    id: 4,
+                    title: "pressure",
+                    data: weather.pressure,
+                    unit: "hPa",
+                },
+                {
+                    id: 5,
+                    title: "humidity",
+                    data: weather.humidity,
+                    unit: "%",
+                },
+                {
+                    id: 6,
+                    title: "wind speed",
+                    data: weather.speed.toFixed(),
+                    unit: windUnit,
+                },
+            ]
+
+            return(
+                <div className="section section__pembagian">
+                    {cards.map(({id, title, data, unit})=>(
+                        <div key={id} className="kard">
+                            <small>{title}</small>
+                            <h3>{`${data} ${unit}`}</h3>
+                        </div>
+                    ))}
+                </div>
+            )
+        }
+
+        const App =()=>{
+            
+            const [weather,setWeather] = useState(null);
+            const [units,setUnits] = useState("metric");
+
+            useEffect(()=>{
+                const fetchWeatherData = async () => {
+                    const data = await getWeatherData("paris", units)
+                    setWeather(data); 
+                };
+                fetchWeatherData();
+            }, [units]);
+            
+            const handleUnitsClick =(e)=>{
+                const button = e.currentTarget;
+                const currentUnits = button.innerText.slice(0);
+
+                const isCelsius = currentUnits === "C";
+                button.innerText = isCelsius ? "F" : "C";
+                setUnits(isCelsius ? "metric" : "imperial")
+            }
+
+            return(
+                <div className="app" style={{background: "url('afrika.jpg')", backgroundPosition: "center", backgroundSize: "cover"}}>
+                    <div className="overlay">
+                        {weather &&(
+                            <div className="kontainer">
+                                <div className="section section__input">
+                                    <input type="text" />
+                                    <button onClick={(e)=> handleUnitsClick(e)}>f</button>
+                                </div>
+    
+                                <div className="section section__temperature">
+                                    <div className="temperature_weather">
+                                        <h3>{`${weather.name},${weather.country}`}</h3>
+                                        <img src={weather.iconURL} alt="wheatherIcon" />
+                                        <h3>{weather.description}</h3>
+                                    </div>
+                                    <div className="cuaca">
+                                        <h3>{`${weather.temp.toFixed()}`} &deg;{`${units === "metric" ? "C" : "F" }`}</h3>
+                                    </div>
+                                </div>
+    
+                                {/*pembagian*/}
+                                <Description weather={weather} units={units} />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )
+        }   
+
+        ReactDOM.render(<App />, document.querySelector("#app"))
+    </script>
+</body>
+</html>

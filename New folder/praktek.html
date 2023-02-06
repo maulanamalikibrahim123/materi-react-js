@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktek</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    
+    
+    
+    <script type="text/babel">
+        //buat card
+        //fungsikan event
+
+        const Card = ()=>{
+            return(
+                <div className="bg-warning" style={{width: "100wh", height: "100vh"}}>
+                    <div className="container">
+                        <div className="row d-flex justify-content-center" style={{paddingTop: "150px"}}>
+                            <div className="card col-4" >
+                                <div className="foto py-3">
+                                    <img src="maulana.jpg" style={{borderRadius: "50%", width: "50px", height: "50px" }} alt="" srcset="" />
+                                    <span className="ml-3"><b>MAULANA MALIK IBRAHIM</b></span>
+                                </div>
+                                <div className="description my-3">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum perferendis dolores soluta. Aut earum impedit quo ad veniam recusandae totam similique autem! Sed possimus nobis deleniti nisi fugiat quia excepturi sint incidunt tempore necessitatibus corrupti quibusdam molestiae suscipit aliquid perspiciatis, illo porro distinctio totam iusto. Maiores et esse nulla facere!</p>
+                                </div>
+                                <div className="button pb-2">
+                                    <div className="btn btn-info">SUBSCRIBE</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        const {useState} = React;
+        const Alat=()=>{
+            
+            const [hape,setHape] = useState({
+                merk: "VIVO",
+                type: "Android",
+                status: "OFF",
+                baterai: 100,
+                nyalakan: ()=>{
+                    setHape((a)=>{
+                        return {
+                            ...a,
+                            status: "ON",
+                            baterai: a.baterai - 10,
+                        }
+                    })
+                },
+                matikan: ()=>{
+                    setHape((b)=>{
+                        return{
+                            ...b,
+                            status: "OFF",
+                        }
+                    })
+                },
+                charger: ()=>{
+                    setHape((c)=>{
+                        return{
+                            ...c,
+                            baterai: c.baterai + 20,
+                        }
+                    })
+                }
+            })
+            const tekan=()=>{
+                alert("assalamualiakum")
+            }
+            return (
+                <div className="container my-5">
+                    <h1>HP</h1>
+                    <p>merk: {hape.merk}</p>
+                    <p>type: {hape.type}</p>
+                    <p>status: {hape.status}</p>
+                    <p>baterai: {hape.baterai}</p>
+                    <button className="btn btn-info ml-3" onClick={()=>hape.nyalakan()}>NYALAKAN</button>
+                    <button className="btn btn-info ml-3" onClick={()=>hape.matikan()}>MATIKAN</button>
+                    <button className="btn btn-info ml-3" onClick={()=>hape.charger()}>CHARGER</button>
+                </div>
+            )
+        }
+        class Tekan extends React.Component{
+            klik(nama){
+                alert("assalamualaikum" + nama)
+            }
+            masuk(m){
+                m.target.innerHTML = "klik sekarang";
+            }
+            keluar(k){
+                k.target.innerHTML = "klik disini"
+            }
+            constructor(){
+                super();
+                this.state ={
+                    nama: ""
+                }
+            }
+            isi(i){
+                this.setState({nama: i.target.value})
+            }
+            render(){
+                return (
+                    <div className="container-fluid my-5">
+                        <button className="btn btn-danger" onMouseOut={(k)=>this.keluar(k)} onMouseEnter={this.masuk.bind(this)} onClick={(t)=>this.klik(" maulana")}>klik disini</button>
+                        <div className="mt-3">
+                            <h1>HAI {this.state.nama}</h1>
+                            <input type="text" onChange={(i)=>this.isi(i)} />
+                        </div>
+                    </div>
+                    
+                )
+            }
+        }
+        
+
+        function App() {
+            return (
+                <div>
+                    <Card />
+                    <Alat />
+                    <Tekan />
+                </div>
+          
+            );
+          }         
+        ReactDOM.render(<App />, document.querySelector("#app"))
+        
+        
+    </script>
+</body>
+</html>

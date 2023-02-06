@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>TIC TAC TOE</title>
+</head>
+<body>
+    <div id="app"></div>
+
+
+
+    <script type="text/babel">
+        //buat box lalu buat wadahnya
+        //buat eksekusinya dan circlenya
+        //buat kondisi winnya dan cara untuk mendeteksi winnya
+        //buat skor pendeteksinya sekaligus buat boardnya
+        //buat game overnya seklaigus buttonya]
+
+        const { useState } = React;
+        const Box=({value,onClick})=>{
+            const style = value === "x" ? "box x" : "box o"
+            return(
+                <button className={style} onClick={onClick} >{value}</button>
+            )
+        }
+        
+        const Board=({board,onClick})=>{
+            return(
+                <div className="board">
+                    {board.map((value,idx)=>{
+                        return <Box value={value} onClick={()=> value === null && onClick(idx)} />
+                    })}
+                </div>
+            )
+        }
+
+        const CekScore=({scores,circle})=>{
+            const {xScore,oScore} = scores;
+            return(
+                <div className="scoreboard">
+                    <span className={`scores xscore ${!circle && "inactive"}`}>X-{xScore}</span>
+                    <span className={`scores oscore ${circle && "inactive"}`}>O-{oScore}</span>
+                </div>
+            )
+        }
+
+        const ResetButton =({reset})=>{
+            return (
+                <button className="resetbutton" onClick={reset}>reset</button>
+            )
+        }
+        const App=()=>{
+            const [board,setBoard] = useState(Array(9).fill(null))
+            const [circle,setCircle] = useState(true);
+            const [scores,setScores] = useState({xScore: 0, oScore: 0})    
+            const [gameOver,setGameOver] = useState(false)
+
+            const winning = [
+                [0,1,2],
+                [3,4,5],
+                [6,7,8],
+                [0,3,6],
+                [1,4,7],
+                [2,5,8],
+                [2,4,6],
+                [0,4,8]
+            ]
+            
+            const eksekusi =(boxIdx)=>{
+                const update = board.map((value,idx)=>{
+                    if(idx === boxIdx){
+                        return circle === true ? "x" : "o";
+                    }else{
+                        return value;
+                    }
+                })
+
+                const cekScore = cekWinner(update)
+                if(cekScore){
+                    if(cekScore === "x"){
+                        let { xScore } = scores;
+                        xScore += 1
+                        setScores({...scores, xScore})
+                    }else{
+                        let { oScore } = scores;
+                        oScore += 1
+                        setScores({...scores, oScore})
+                    }
+                }
+                setCircle(!circle);
+                setBoard(update)
+            }
+            
+            const reset = ()=>{
+                setGameOver(false)
+                setBoard(Array(9).fill(null))
+            }
+
+            const cekWinner =(board)=>{
+                for(let i=0; i<winning.length; i++){
+                    const [x,y,z] = winning[i];
+
+                    if(board[x] && board[x] === board[y] && board[y] === board[z]){
+                        setGameOver(true)
+                        return board[x]
+                    }
+                }
+            }
+            return(
+                <div>
+                    <CekScore scores={scores} circle={circle} />
+                    <Board board={board} onClick={gameOver ? false : eksekusi} />
+                    <ResetButton reset={reset} />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />,document.querySelector("#app"))
+    </script>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <!--- react cdn-->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title> DEMO React JS</title>
+
+    <!-- boostrap cdn-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+
+
+    <div id="maul"></div>
+    <hr>
+    <div id="mmi"></div>
+    <hr>
+    <div id="tes"></div>
+    <hr>
+    <div class="container">
+        <div id="card"></div>
+    </div>
+    <script type="text/babel">
+
+        //1. class component class Buttonjsx extends React.Component { render(){ return <button className="btn btn-primary">button primary</button> } } //2. function component //1. function Button(){ return <button className="btn m-5 btn-primary">button primary</button>        } //2.function terbaru const Button2 = () => { return <button className="btn m-2 btn-primary">button primary</button> } const Cardfuction = () => { return (
+        <div className="card" style={{width: "20em"}}>
+            <div className="card-header bg-dark text-light">
+                <h5>MAULANA MALIK IBRAHIM</h5>
+            </div>
+            <div className="ms-3 card-cody">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore repudiandae ad quis quod porro dolores, in vel aliquid ipsum magni temporibus optio cupiditate nulla minus consequatur facilis dignissimos quidem distinctio? Ab recusandae
+                    et a debitis eum deleniti alias possimus iusto!</p>
+                <Button2 />
+            </div>
+            <div className="card-footer">
+                <small className="text-muted">Lorem, ipsum dolor.</small>
+            </div>
+        </div>
+        const Navbar = () => { return (
+        <nav className="navbar navbar-expand-lg bg-light">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#">Navbar</a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">Link</a>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Dropdown
+                                    </a>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="#">Action</a></li>
+                                <li><a className="dropdown-item" href="#">Another action</a></li>
+                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link disabled">Disabled</a>
+                        </li>
+                    </ul>
+                    <form className="d-flex" role="search">
+                        <button className="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        ) } ReactDOM.render (
+        <Navbar />, maul); ReactDOM.render(
+        <Button2 />, mmi); ReactDOM.render(
+        <Cardfuction />, card);
+    </script>
+    <!-- bootstrap cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

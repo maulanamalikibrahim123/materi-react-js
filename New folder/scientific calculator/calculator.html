@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KALKULATOR</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="kalkulator.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <div class="container" >
+                <div class="row d-flex justify-content-center">
+                    <div class="gabung">
+                        <div class="output bg-dark lebar1 text-light" >
+                            <div class="operation">
+                                <div class="value"></div>
+                            </div>
+    
+                            <div class="result">
+                                <div class="value">0</div>
+                            </div>
+                        </div>
+    
+                        <div class="input bg-warning lebar2">sss</div>
+                    </div>        
+                </div>
+            </div>
+    </div>
+    </div>
+
+
+
+    <script type="text/babel">
+      //element
+        const input = document.querySelector(".input");
+        const output_operation = document.querySelector(".operation value")
+        const output_result = document.querySelector(".result value")
+       
+      //variabel
+        const operator = ["+","-","*","/"];
+        const power = "power(", FACTORIAL ="FACTORIAL";
+        let data ={
+        operation: [],
+        formula: []
+        }
+
+      //kalkulator button
+        let kalculator_btn = []
+
+      //create kalkulator btn
+        function createKalkulatorBtn(){
+            const btn_per_row = 8;
+            let add_btn = 0;
+
+            kalkulator_btn.forEach( buttton=>{
+                if(add_btn % btn_per_rows == 0){
+                    input.innerHTML += `<div class="row"></div>`
+                }
+
+                const row = document.querySelector(".row:last-child")
+                row.innerHTML += `<button id="${button.name}">
+                                ${button.symbol}
+                                </button>`;
+                add_btn++;
+            })
+        }
+        createKalkultorBtn();
+
+      //klik event listener
+        input.addEventListener("click", event=>{
+            const target_btn= event.target;
+
+            kalkulator_btn.forEach(button=>{
+                if(button.name == target_btn.id) kalkulator(button)
+            })
+
+        })
+
+        function kalkulator(buttton){
+            if(button.type =="operator"){
+                data.operation.push(button.symbol)
+                data.formula.push(button.formula)
+
+            }else if(button.type == "number"){
+                data.operation.push(button.symbol)
+                data.formula.push(button.formula)
+
+            }else if(button.type == "trigo_function"){
+
+            }else if(buttton.type == "math_function"){
+
+            }else if(buttton.type == "key"){
+                
+            }else if(buttton.type == "calculate"){
+                
+            }
+            updateOutputOperation(data.operation.join(""))
+        }
+
+
+    </script>
+</body>
+</html>

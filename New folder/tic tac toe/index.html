@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>TIC TAC TOE</title>
+</head>
+<body>
+    <div id="app"></div>
+
+
+
+    <script type="text/babel">
+
+        const { useState } = React;
+    
+        const Board =({board, onClick})=>{
+            return(
+                <div className="board">
+                    {board.map((value,idx)=>{
+                        return <Box value={value} onClick={()=> value === null && onClick(idx)} />
+                    })}
+                </div>
+            )
+        }
+            
+        const Box=({ value, onClick })=>{
+            const style = value === "x" ? "box x" : "box o";
+            return(
+                <div>
+                    <button className={style} onClick={onClick}>{value}</button>    
+                </div>
+            )
+        }
+       
+        const ScoreBoard = ({scores, xPlaying})=>{
+            const { xScore, oScore } = scores;
+            return(
+                <div className="scoreboard">
+                    <span className={`score xscore ${!xPlaying && "inactive"}`}>X- {xScore}</span>
+                    <span className={`score oscore ${xPlaying && "inactive"}`}>O- {oScore}</span>
+                </div>
+            )
+        }
+
+        const ResetButton = ({resetBoard})=>{
+            return(
+                <div class="fleks d-flex justify-content-center">
+                    <button className="reset-btn mt-3" onClick={resetBoard}>RESET BOY</button>
+                </div>        
+            )
+        }
+
+        function App(){
+            const WIN_CONDITIONS = [
+                [0,1,2],
+                [3,4,5],
+                [6,7,8],
+                [0,3,6],
+                [1,4,7],
+                [2,5,8],
+                [0,4,8],
+                [2,4,6]
+            ]
+
+            const [board,setBoard] = useState(Array(9).fill(null))
+            const [xPlaying, setXPlaying] = useState(true)
+            const [scores, setScores] = useState({xScore: 0, oScore: 0});
+            const [gameOver, setGameOver] = useState(false) 
+            const handleBlockClick = (boxIdx)=>{
+                const updatedBoard = board.map((value,idx)=>{
+                    if(idx === boxIdx){
+                        return xPlaying === true ? "x": "o";
+                    }else{
+                        return value;
+                    }
+                })
+                const winner = checkWinner(updatedBoard);
+                if(winner){
+                    if(winner === "o"){
+                        let {oScore} = scores;
+                        oScore += 1
+                        setScores({...scores, oScore})
+                    }else{
+                        let {xScore} = scores;
+                        xScore += 1
+                        setScores({...scores, xScore})
+                    }
+                }
+                
+                setBoard(updatedBoard);
+                
+                setXPlaying(!xPlaying);
+            } 
+            
+            const checkWinner = (board)=>{
+                for(let i = 0; i < WIN_CONDITIONS.length; i++){
+                    const [x,y,z] = WIN_CONDITIONS[i];
+
+                    if(board[x] && board[x] === board[y] && board[y] === board[z]){
+                        setGameOver(true)
+                        return board[x]
+                    }
+                }
+            }
+
+            const resetBoard=()=>{
+                setGameOver(false);
+                setBoard(Array(9).fill(null))
+            }
+
+            return(
+                <div className="App">
+                    <ScoreBoard scores={scores} xPlaying={xPlaying} />
+                    <Board board={board} onClick={gameOver ? resetBoard : handleBlockClick} />
+                    <ResetButton resetBoard={resetBoard} />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, document.querySelector("#app"))
+    </script>
+</body>
+</html>

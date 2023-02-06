@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seputar React Js</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <div id="app2"></div>
+    <div id="app3"></div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <script type="text/babel">
+        const Hallo = (props) =>{
+                return <h1>{props.text}</h1>
+            
+        }
+        
+
+        class Keterangan extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    judul: "ada apa dengan aku ? ",
+                    mk: "filsafat ilmu",
+                    ket: "Lihat"
+                }
+            }
+            ubah=()=>{
+                this.setState({
+                    judul: "ada apa dengan kehidupan ? ",
+                    ket: "Mantap"
+                })
+            }
+            render(){
+                const card = (
+                    <div className="card" style={{width: "18rem"}}>
+                        <div className="card-body">
+                          <h5 className="card-title">{this.state.judul}</h5>
+                          <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <a href="#" className="btn btn-primary" onClick={this.ubah}>Go somewhere</a>
+                        </div>
+                    </div>
+                )
+                return card
+            }
+            
+        }
+
+
+        const Button = ()=>{
+            return <button className="btn btn-primary">Tekan</button>
+        }
+
+        const Beranda =()=>{
+            return (
+                <div className="bg-info" style={{display: "flex",justifyContent: "center", alignItems: "center",width: "100vw", height: "100vh"}}>
+                    <div className="bg-light p-3" style={{boxShadow: "0 0 10px black ",borderRadius: "20px",width: "400px",height: "400px"}}>
+                        <div className="foto pb-5">
+                            <img src="maulana.jpg" style={{borderRadius: "50%",width: "50px", height: "50px"}} alt="" />
+                            <span className="m-2"><b> Maulana Malik Ibrahim</b></span>
+                            <hr />
+                        </div>
+
+                        <div className="teks">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde modi delectus dignissimos, id mollitia officia facilis dolorem hic omnis dolore quaerat alias ducimus qui! Repellendus in facere modi possimus laboriosam harum. Maxime, odio voluptate. Tempore excepturi corporis nesciunt voluptatum porro in libero illo, fugiat laborum nisi, exercitationem quo blanditiis fugit.</p>
+                        </div>
+                        <div className="row d-flex justify-content-center">
+                            <button className="col-10 btn btn-info">LIHAT</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        const {useState} = React;
+        const Objek = ()=>{
+            const [mtr,setMtr] = useState({
+                merk: "honda",
+                type: "scoopy",
+                plat: "KU47493",
+                bensin: 20,
+                status: "OFF",
+                nyalakan: ()=>{
+                    setMtr((a) => {
+                        return{
+                            ...a,
+                            status : "ON",
+                            bensin: a.bensin - 5,
+                        }
+                    })
+                },
+                matikan: ()=>{
+                    setMtr((b)=>{
+                        return{
+                            ...b,
+                            status: "OFF",
+                        }
+                    })
+                },
+                isiBensin: ()=> {
+                    setMtr((c)=>{
+                        return{
+                            ...c,
+                            bensin : c.bensin + 20,
+                        }
+                    })
+                }
+            })
+            const motor = {
+                merk: "honda",
+                type: "scoopy",
+                plat: "KU47493",
+                bensin: 20,
+                status: "OFF",
+                nyalakan: ()=>{
+                    motor.status= "ON",
+                    console.log(motor.status)
+                }
+            }
+            return ( 
+                <div className="m-5">
+                    <h1>MOTOR</h1>
+                    <p>merk: {mtr.merk}</p>
+                    <p>type: {mtr.type}</p>
+                    <p>plat: {mtr.plat}</p>
+                    <p>bensin: {mtr.bensin} L</p>
+                    <p>status: {mtr.status}</p>
+                    <button className="btn btn-primary ml-3" onClick={()=>mtr.nyalakan()}>NYALAKAN</button>
+                    <button className="btn btn-warning ml-3" onClick={()=>mtr.matikan()}>MATIKAN</button>
+                    <button className="btn btn-warning ml-3" onClick={()=>mtr.isiBensin()}>ISI BENSIN</button>
+                </div>
+                ) 
+            }
+            class Tombol extends React.Component{
+                Tekan(nama){
+                    alert("Assalamualaikum "+ nama)
+                }
+                masuk(a){
+                    a.target.innerHTML = "CLICK THIS"
+                }
+                keluar(b){
+                    b.target.innerHTML = "TEKAN INI"
+                }
+                constructor(){
+                    super();
+                    this.state = {
+                        nama: ""
+                    }
+                }
+                sapa(d){
+                    this.setState({nama: d.target.value})
+                }
+                
+                render(){
+                    return(
+                        <div>
+                            <button className="btn btn-info m-3" onClick={this.Tekan.bind(this, "maulana")} onMouseEnter={(a)=>this.masuk(a)} onMouseOut={(b)=>this.keluar(b)}  >TEKAN INI</button>
+                            <div className="ml-3 my-4">
+                                <h3>HAI {this.state.nama}</h3>
+                                <input type="text" onChange={(d)=>this.sapa(d)} />
+                            </div>
+                        </div>
+                    )
+                }
+            }
+        
+        
+
+        
+        function App() {
+            return (
+                <div>
+                    <Button />
+                    <Hallo text="maulana" />
+                    <Hallo text="im gonna kill su" />
+                    <Keterangan />
+                    <Beranda />
+                    <Objek />
+                    <Tombol />
+                </div>
+          
+            );
+          }         
+        ReactDOM.render(<App />, document.querySelector("#app"))
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+:root{
+    --section__overlay: rgba(0,0,0,0.2);
+    --section__background: rgba(0,0,0,0.8);
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.app{
+    width: 100%;
+    height: 100vh;
+}
+.overlay{
+    padding: 1rem;
+    width: 100%;
+    height: 100vh;
+    background: var(--section__overlay);
+}
+.kontainer{
+    max-width: 880px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    padding: 1rem;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+
+.section{
+    padding: 1rem;
+    border-radius: 0.8rem;
+    color: white;
+    margin: 10px auto;
+}
+.section__input, .section__temperature{
+    background: var(--section__background);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+}
+.section__input>input{
+    background: transparent;
+    border: 0.8px solid white;
+    border-radius: 0.4rem;
+    padding: 0.4rem; 
+    color: white;
+    font-size: 16px;
+    font-weight: 200;
+}
+.section__input>input:focus{
+    outline: none;
+}
+.section__input>button{
+    padding: 5px 50px;
+    border-radius: 0.2rem; 
+    border: none;
+    font-weight: 400;
+    font-size: 20px;
+}
+.temperature_weather> h3{
+    font-size: 15px;
+}
+.section>.cuaca{
+    display: flex;
+    align-items:center;
+    text-align: center;
+    padding-right: 10px;
+}
+.section>.cuaca>h3{
+    font-weight: 650;
+    font-size: 70px;
+}
+.section__pembagian{
+    display: grid;
+    margin: auto;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.section__pembagian>.kard{
+    display: flex;
+    padding: 6px;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    background: var(--section__background);
+    margin: 10px;
+    border-radius: 0.4rem;
+}
+.section__pembagian>.kard>h3{
+    font-weight: 600;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--CDN react-->
+        <meta charset="utf-8">
+        <!--kira2 seperti ini-->
+
+        <!-- 1. install -->
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title> DEMO React JS</title>
+
+    </head>
+    <body>
+        <!-- 2. membuat wadah / container-->
+        
+        <div id="maul"></div>
+        <hr>
+        <div id="dontol"></div>
+
+
+
+        <!-- 3. membuat component-->
+        <script type="text/babel">
+            /**const root = document.querySelector("#maul")
+            const mul = React.createElement("h1", {
+                children: "HELLO WORLD",
+                className: "Genji"
+            });
+            
+            <!-- melakukan render-->
+            ReactDOM.render(mul, root);**/
+    
+
+            
+            const root = document.querySelector("#maul")
+            /**----------- VERSI PANJANG---------------
+             
+            const p1 = React.createElement("p", {
+                children: "Hello World",
+            });
+            const p2 = React.createElement("P", {
+                children: "Hello Paragraf 2",
+            });
+
+            const element = React.createElement("div", {
+                children: [p1, p2],
+            })
+**/         
+/**    
+            const wadah = React.createElement("ul", {className: "list"},
+                React.createElement("li", null, "MAULANA"),
+                React.createElement("li", null, "MALIK"),
+                React.createElement("li", null, "IBRAHIM")
+            );
+            **/
+/**
+            const pendek = (
+                <ul>
+                    <li>MAULANA</li>
+                    <li>MALIK</li>
+                    <li>IBRAHIM</li>
+                
+                </ul>
+            )
+   **/        
+            const mmi = "MAULANA MALIK IBRAHIM";
+            const salam = <h1>HELLO {mmi}</h1>;
+            const image = < img src="../logo alkhairaat.png" />
+            function hai(name){
+                return <p>Hai <b>{name}</b></p>
+            };
+            const paragraf = (
+                <div>
+                {hai("ibrahim malokko")}
+                {hai("indonesia")}
+                <p>Hai <b>Malik</b></p>
+                <p>Hai <b>Ibrahim</b></p>
+                </div >
+                );
+                
+                ReactDOM.render(paragraf, root); 
+// jam 
+/**           
+            const waktu = (
+                <div>
+                    <h1>Jam Sekarang</h1>
+                    <h2>{new Date().toLocaleTimeString()}</h2>    
+                </div>
+            );
+            **/
+           //jam dinamis terus2an
+           function gerak(){
+            const jam = (
+                <div>
+                    <h1>Sekarang Jam</h1>
+                    <h2>{new Date().toLocaleTimeString()}</h2>    
+                </div>
+                )
+                ReactDOM.render(jam, dontol)
+           }
+
+           gerak()
+
+           setInterval(function() {
+            gerak()
+           }, 1000 );
+
+
+
+        </script>
+    </body>
+</html>

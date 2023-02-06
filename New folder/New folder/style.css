@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#app{
+    background: white;
+    height: 100vh;
+    width: 100wh;
+}
+.fleks{
+    border-radius: 15px;
+    position: absolute;
+    left: 500px;
+    top: 150px;
+    width: 400px;
+    box-shadow: 0 0 10px black;
+    height: 450px;
+    background: red;
+}
+.wadah_input{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+input{
+    border-radius: 10px;
+    width: 345px;
+    height: 70px;
+    font-size: 20px;
+    padding: 0 5px;
+    margin-bottom: 20px;
+}
+input:focus{
+    outline: none;
+}
+.button{
+    margin: 5px;
+    display: grid;
+    border-radius: 10px;
+    grid-template-columns: repeat(4,1fr);
+    grid-auto-rows: minmax(50px, auto);
+    font-weight: bold;
+
+}
+.white{
+    background: white;
+    color: red;
+}
+#clean{
+    grid-column: 1/3
+}
+#samadengan{
+    grid-column: 3/5;
+}
+.black{
+    background: black;
+    color: white;
+}

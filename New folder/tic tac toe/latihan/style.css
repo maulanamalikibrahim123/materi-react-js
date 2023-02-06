@@ -1,0 +1,77 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: black;
+}
+.box{
+    background: white;
+    margin: 0.5rem auto;
+    height: 70px;
+    width: 130px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 40px;
+}
+.box:hover{
+    box-shadow: 0 0 10px yellow;
+}
+.x{
+    color: red;
+}
+.o{
+    color: blue;
+}
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, 10rem);
+    justify-content: center;
+    margin: 5rem auto;
+}
+.scoreboard{
+    background: white;
+    font-weight: bold;
+    height: 80px;
+    width: 250px;
+    font-size: 40px;
+
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px white;
+    justify-content: space-evenly;
+    display: flex;
+}
+.scores{
+    text-align: center;
+    width: 100%;
+}
+.xscore{
+    border-bottom: 5px solid red;
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+.oscore{
+    border-bottom: 5px solid blue;
+    border-radius:  0 0.5rem 0.5rem 0;
+}
+.inactive{
+    border-bottom: 5px solid transparent;
+}
+.resetbutton{
+    background: white;
+    border-radius: 10px;
+    height: 70px;
+    width: 200px;
+    font-weight: bold;
+    font-size: 40px;
+    margin: 5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+.resetbutton:hover{
+    box-shadow: 0 0 10px yellow;
+
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API React JS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="link"></div>
+
+
+    <script type="text/babel">
+        const { useState } = React;
+        const { useEffect } = React;
+
+        const Products = ()=>{
+            const url = "https://fakestoreapi.com/products/1";
+            const [products, setProducts] = useState([]);
+
+            const getDataProduct = async ()=>{
+                const response = await fetch(url);
+                const JSONnya = await response.json();
+                setProducts(JSONnya)
+                
+            }
+
+            useEffect( ()=>{
+                getDataProduct();
+            })
+
+            return(
+                <div className="container">
+                    <h1>ma product</h1>
+                    <div className="row">
+                        { products.map( (produk)=>{
+                            return (
+                                <div className="col-3">
+                                    <Card 
+                                    title={produk.title}
+                                    price={produk.price}
+                                    key={produk.title}
+                                    description={produk.description} />
+                                </div>
+                            )
+                        }) }
+                    </div>
+                </div>
+            )
+        }
+
+        function Card(props){
+            return(
+                <div className="card" style={{width: "18rem"}}>
+                    <img src="..." className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">{props.title}</h5>
+                      <p className="card-text">{props.description}</p>
+                      <a href="#" className="btn btn-primary">{props.price}</a>
+                    </div>
+                  </div>
+            )
+        }
+
+        const App=()=>{
+            return (
+                <div>
+                    <Products />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, document.querySelector("#link"))
+    </script>
+</body>
+</html>

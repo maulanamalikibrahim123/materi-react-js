@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <title>WEATHER REACT JS</title>
+</head>
+<body>
+    <div id="App"></div>
+
+
+    <script type="text/babel">
+       
+        const {useEffect,useState}=React;
+        
+        const iconURL = (iconId) => `https://openweathermap.org/img/wn/${iconId}@2x.png`
+        const myApi ="d2a034023030e0bb179868d32b00b0e4";
+        const weatherData = async(city, units="metric")=>{
+            const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${myApi}&units=${units}`
+            const data = await fetch(URL_API)
+                        .then((res)=>res.json())
+                        .then((dt)=>dt)
+            console.log(data)
+        
+        
+            const {
+                main: {feels_like, humidity, pressure, temp, temp_max,temp_min},
+                weather,
+                wind: {speed},
+                sys: {country},
+                name,
+                
+            } = data;
+    
+            const {description, icon} = weather[0];
+           
+            return {
+                feels_like,
+                humidity,
+                pressure,
+                temp,
+                temp_max,
+                temp_min,
+                speed, 
+                country,
+                name,
+                description,
+                makeIcon: iconURL(icon) 
+            }
+        }
+
+
+       const Temperature =({weather, units})=>{
+            
+            const tempUnit = units === "metric" ? "C" : "F";
+            const speedUnit = units === "metric" ? "m/s" : "m/h";
+
+            const card = [
+                {
+                    id: "1",
+                    name: "min",
+                    data: weather.temp_min.toFixed(),
+                    unit: tempUnit,
+                },
+                {
+                    id: "2",
+                    name: "max",
+                    data: weather.temp_max.toFixed(),
+                    unit: tempUnit,
+                },
+                {
+                    id: "3",
+                    name: "feels like",
+                    data: weather.feels_like.toFixed(),
+                    unit: tempUnit,
+                },
+                {
+                    id: "4",
+                    name: "pressure",
+                    data: weather.pressure,
+                    unit: "hPa",
+                },
+                {
+                    id: "5",
+                    name: "humidity",
+                    data: weather.humidity,
+                    unit: "%",
+                },
+                {
+                    id: "6",
+                    name: "speed",
+                    data: weather.speed,
+                    unit: speedUnit,
+                },
+            ]
+
+            return(
+                <div className="wadah wadah3 ">
+                    {card.map(({id,name,data,unit})=>(
+                        <div key={id} className="kard">
+                            <p>{name}</p>
+                            <h3>{`${data} ${unit}`}</h3>
+                        </div>
+                    ))}
+                    
+                </div>
+            )
+       } 
+
+       
+       const App =()=>{
+            const [weather,setWeather]= useState(null);
+            const [units,setUnits] = useState("metric")
+            const [city,setCity] = useState("paris")
+            const [bg,setBg] = useState("afrika.jpg")
+
+        useEffect(()=>{
+            
+            const dataWeather = async()=>{
+                const data = await weatherData(city)
+                setWeather(data);
+            
+                const ubahBg = units === "metric" ? 20 : 60
+                if(data.temp <= ubahBg) setBg("afrika2.jpg")
+                else setBg("afrika.jpg")
+            }
+            dataWeather()
+        },[units,city])
+
+            const klikInput =(e)=>{
+                if(e.keyCode === 13){
+                    setCity(e.currentTarget.value)
+                }
+            }
+
+            const klikButton =(e)=>{
+                const klik = e.currentTarget;
+                const klikSlice = klik.innerText.slice(0);
+
+                const isCelsius = klikSlice === "C"
+                klik.innerText = isCelsius ? "F":"C";
+                setUnits(isCelsius ? "metric" : "imperial"); 
+            }
+
+           
+
+        return(
+            <div className="background" style={{backgroundImage: `url(${bg})`, backgroundSize: "cover", backgroundPosition: "center"}}>
+                <div className="lapisan-background">
+                    {
+                        weather && (
+                            <div className="kontainer">
+                                <div className="wadah wadah1">
+                                    <input onKeyDown={klikInput}  type="text" />
+                                    <button onClick={klikButton} >F</button>
+                                </div>
+        
+                                <div className="wadah wadah2">
+                                    <div>
+                                        <p>{`${weather.name}, ${weather.country}`}</p>
+                                        <img src={weather.makeIcon} alt="cuaca" />
+                                        <p>{weather.description}</p>
+                                    </div>
+                                    <div className="suhu">
+                                        <h2>{`${weather.temp.toFixed()}`} &deg;{`${units === "metric" ? "C" : "F"}`}</h2>
+                                    </div>
+                                </div>
+                                
+                                <Temperature weather={weather} units={units} />
+                            </div>
+                        )
+                    }    
+                </div>
+            </div>
+        )
+       }
+
+        ReactDOM.render(<App />,document.querySelector("#App"))
+    </script>
+</body>
+</html>

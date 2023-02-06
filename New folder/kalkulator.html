@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KALKULATOR</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="kalkulator.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+
+
+    <script type="text/babel">
+        
+        const { useState } = React;
+        const Apk=()=>{
+            const [result, setResult] = useState("");
+
+            const bilangan=(e)=>{
+                setResult(result.concat(e.target.name))
+            }
+            const clean=()=>{
+                setResult("");
+            }
+            const hapus = ()=>{
+                setResult(result.slice(0, result.length -1));
+            }
+            const jumlah=()=>{
+                try{
+                    setResult(eval(result).toString());
+                }catch(err){
+                    setResult("ERROR WOY")
+                }
+            }
+
+            return (
+                <div className="container bg-dark" style={{height: "100vh", width: "100wh"}}>
+                    <div className="row d-flex justify-content-center" style={{paddingTop: "150px"}}>
+                        <div className="col-4 bg-light p-3" style={{borderRadius: "15px"}}>
+                            <form className="input-group pb-3" action="">
+                                <input className="form-control" type="text" value={result}  />
+                            </form>
+                            <div className="button">
+                                <button className="warna1" id="clean" onClick={clean}>Clean</button>
+                                <button className="warna1" onClick={hapus}>C</button>
+                                <button className="warna2" name="/" onClick={bilangan}>&divide;</button>
+                                <button name="9" onClick={bilangan}>9</button>
+                                <button name="8" onClick={bilangan}>8</button>
+                                <button name="7" onClick={bilangan}>7</button>
+                                <button className="warna2" name="*" onClick={bilangan}>x</button>
+                                <button name="6" onClick={bilangan}>6</button>
+                                <button name="5" onClick={bilangan}>5</button>
+                                <button name="4" onClick={bilangan}>4</button>
+                                <button className="warna2" name="-" onClick={bilangan}>-</button>
+                                <button name="3" onClick={bilangan}>3</button>
+                                <button name="2" onClick={bilangan}>2</button>
+                                <button name="1" onClick={bilangan}>1</button>
+                                <button className="warna2" name="+" onClick={bilangan}>+</button>
+                                <button name="0" onClick={bilangan}>0</button>
+                                <button name="." onClick={bilangan}>,</button>
+                                <button className="warna2" id="jumlah" onClick={jumlah}>=</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        
+        const App = ()=>{
+            return(
+                <div className="bg-dark">
+                    <Apk />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />,document.querySelector("#app"));
+    </script>
+</body>
+</html>
